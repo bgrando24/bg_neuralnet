@@ -4,7 +4,7 @@ This repository is a personal starter kit for modern C++ projects. It couples CM
 
 ## What you get
 
--   CMake 4.1+ project configured for C++20
+-   CMake 3.25+ project configured for C++20
 -   vcpkg integrated via the CMake toolchain file and pinned registry baseline
 -   Ninja-based CMake presets for debug/release builds
 -   Example `src/main.cpp` using bundled `spdlog` and `nlohmann-json`
@@ -31,14 +31,11 @@ xcode-select --install
 brew install cmake ninja git
 ```
 
-**Windows**
+**Windows (MSVC)**
 
-1. Install the following:
-    - Visual Studio Build Tools (C++ workload) or the full IDE
-    - Git for Windows
-    - CMake
-    - Ninja (optional but recommended)
-2. Ensure `cmake`, `ninja`, and `git` are on the `PATH`.
+1. Install: Visual Studio Build Tools (C++), Git, CMake, (optional) Ninja.
+2. Open an **x64 Native Tools Command Prompt for VS** (or run `vcvarsall.bat`) so `cl.exe` is on PATH.
+    - If you prefer MinGW instead of MSVC, set `VCPKG_TARGET_TRIPLET=x64-mingw-dynamic` before configuring.
 
 ---
 
@@ -50,15 +47,25 @@ brew install cmake ninja git
     cd my_new_project
     ```
 2. Pull submodules and bootstrap vcpkg:
+
     ```sh
     git submodule update --init --recursive
     ./vcpkg/bootstrap-vcpkg.sh              # Windows PowerShell: .\vcpkg\bootstrap-vcpkg.bat
     ```
+
+    > **Windows tip:** Run the commands from an **MSVC Developer Prompt** so CMake/Ninja use `cl.exe`
+    > (matches vcpkg’s `x64-windows` triplet). If you use MinGW, set `VCPKG_TARGET_TRIPLET=x64-mingw-dynamic`.
+
 3. Configure and build using the provided CMake presets:
+
     ```sh
     cmake --preset release                  # or --preset debug
     cmake --build --preset build-release    # or build-debug
     ```
+
+    - If you get a “could not read presets” error on older CMake, either upgrade CMake (≥3.27 for Presets v8)
+      or edit `CMakePresets.json` and set `"version": 6`.
+
 4. Run the sample app:
     ```sh
     ./build/app                             # Windows: .\build\app.exe
