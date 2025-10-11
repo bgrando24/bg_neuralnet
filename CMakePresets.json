@@ -1,0 +1,25 @@
+{
+    "version": 8,
+    "cmakeMinimumRequired": {"major": 4, "minor": 1},
+    "configurePresets": [
+        {
+            "name": "base",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+            "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake",
+            "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        { "name": "release", "inherits": "base" },
+        {
+        "name": "debug",
+        "inherits": "base",
+        "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+        }
+    ],
+    "buildPresets": [
+    { "name": "build-release", "configurePreset": "release" },
+    { "name": "build-debug",   "configurePreset": "debug" }
+  ]
+}
