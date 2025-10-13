@@ -106,6 +106,71 @@ During development you only need `cmake --build --preset build-<config>` to rebu
 
 ---
 
+## Testing with CTest
+
+CMake has built-in testing for your **executables**, called `CTest`.
+
+In short, CTest is intended for testing whether executables run without error and also allows you to pass in arguments.
+
+**To add your own tests inside the `CMakeLists.txt` file:**
+
+1. Ensure your executable is built by CMake along with any required libraries
+
+```CMake
+# create an executable called "app", using src/main.cpp
+add_executable(app src/main.cpp)
+# libraries to link, for example:
+target_link_libraries(app PRIVATE
+  spdlog::spdlog
+  nlohmann_json::nlohmann_json
+)
+```
+
+2. Testing should already be enabled, but check `enable_testing()` is present:
+
+```CMake
+# place this before adding any tests, should be there already in this skeleton
+enable_testing()
+```
+
+3. Add your test! The syntax is straightforward:
+
+```CMake
+# syntax: NAME <arbitrary name for test> COMMAND <executable name you defined above>
+# to pass in arguments, just add them after the name of the executable, for example:
+    # add_test(NAME test_main COMMAND app arg1 arg2 ...)
+add_test(NAME test_main COMMAND app)
+```
+
+4. To run tests:
+
+```sh
+# build the project, e.g. "cmake --build --preset build-debug"
+cd build
+ctest
+```
+
+And that's it! Your terminal output should look something like:
+
+```sh
+Test project <project_dir>/cpp_skeleton/build
+    Start 1: <name of your test>
+1/2 Test #1: <name of your test> ..............   Passed    0.00 sec
+    Start 2: <name of second test>
+2/2 Test #2: <name of second test> ............   Passed    0.00 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   0.01 sec
+```
+
+### More resources:
+
+-   Handy tutorial: https://cmake.org/cmake/help/book/mastering-cmake/chapter/Testing%20With%20CMake%20and%20CTest.html
+-   Or official docs: https://cmake.org/cmake/help/book/mastering-cmake/chapter/Testing%20With%20CMake%20and%20CTest.html
+
+---
+
 ## Continuous integration
 
 `.github/workflows/ci.yml`:
@@ -124,7 +189,6 @@ During development you only need `cmake --build --preset build-<config>` to rebu
 -   `vcpkg.json` – vcpkg manifest
 -   `vcpkg-configuration.json` – pinned registry baseline
 -   `vcpkg/` – vcpkg submodule
--   `.vscode/` – optional editor configuration
 
 ---
 
@@ -133,5 +197,3 @@ During development you only need `cmake --build --preset build-<config>` to rebu
 -   Missing headers? Re-run `cmake --preset <config>` to trigger vcpkg installation, then rebuild.
 -   Build directory in a bad state? Remove `build/` (or run `cmake --fresh --preset <config>` when on CMake ≥ 3.24) and reconfigure.
 -   Upgrading compilers or clang-tidy? Add configuration-specific cache variables in `CMakePresets.json`.
-
-Happy hacking!

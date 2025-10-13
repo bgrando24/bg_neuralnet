@@ -1,13 +1,17 @@
-# set tje CMake and C++ version/standard numbers
+# set the CMake and C++ version/standard numbers
 cmake_minimum_required(VERSION 3.25)
 project(cpp_sandbox LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# CTest
+include(CTest)
+
 # skeleton's default dependencies
 # libs will be discoverable via find_package once vcpkg's toolchain is active
 find_package(spdlog CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
+find_package(doctest CONFIG REQUIRED)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -27,3 +31,12 @@ target_link_libraries(app PRIVATE
   spdlog::spdlog
   nlohmann_json::nlohmann_json
 )
+
+# doctest executable 
+add_executable(run_tests tests/test_main.cpp)
+target_link_libraries(run_tests PRIVATE doctest::doctest)
+
+# enable CMake testing (Ctest)
+enable_testing()
+add_test(NAME test_main COMMAND app)
+add_test(NAME test_docttest_example COMMAND run_tests)
