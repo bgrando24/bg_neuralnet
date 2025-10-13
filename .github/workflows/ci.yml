@@ -45,7 +45,7 @@ jobs:
               shell: bash
               run: |
                   if [ "$RUNNER_OS" == "Windows" ]; then
-                    ./build/Release/app.exe
+                    ./build/app.exe
                   else
                     ./build/app
                   fi
