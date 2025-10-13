@@ -41,7 +41,17 @@ jobs:
               shell: bash
               run: cmake --build --preset build-release
 
-            - name: Smoke run (Linux/macOS only)
-              if: runner.os != 'Windows'
+            - name: Smoke run
               shell: bash
-              run: ./build/app
+              run: |
+                  if [ "$RUNNER_OS" == "Windows" ]; then
+                    ./build/Release/app.exe
+                  else
+                    ./build/app
+                  fi
+
+            - name: CTest run
+              shell: bash
+              run: |
+                  cd build
+                  ctest
