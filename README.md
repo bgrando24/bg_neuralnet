@@ -50,7 +50,8 @@ brew install cmake ninja git
 
     ```sh
     git submodule update --init --recursive
-    ./vcpkg/bootstrap-vcpkg.sh              # Windows PowerShell: .\vcpkg\bootstrap-vcpkg.bat
+    ./vcpkg/bootstrap-vcpkg.sh
+    # Windows PowerShell: .\vcpkg\bootstrap-vcpkg.bat
     ```
 
     > **Windows tip:** Run the commands from an **MSVC Developer Prompt** so CMake/Ninja use `cl.exe`
@@ -81,6 +82,15 @@ During development you only need `cmake --build --preset build-<config>` to rebu
 -   Replace `src/main.cpp` with your own sources and adjust `add_executable` / `target_sources` as needed.
 -   Add a `.gitignore` (at minimum ignore `build/`, `vcpkg_installed/`, and `.cache/`) before committing to a new repo.
 -   Optional: re-run `git remote set-url origin <your new remote>` and remove history with `git checkout --orphan main` if you want a clean slate.
+
+---
+
+## Run with docker
+
+```sh
+docker build -t <container-name> .
+docker run <container-name>
+```
 
 ---
 
