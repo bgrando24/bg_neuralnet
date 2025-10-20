@@ -1,6 +1,6 @@
 # set the CMake and C++ version/standard numbers
 cmake_minimum_required(VERSION 3.25)
-project(cpp_sandbox LANGUAGES CXX)
+project(bg_neuralnet LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 

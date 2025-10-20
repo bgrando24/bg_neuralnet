@@ -1,5 +1,5 @@
 {
-  "name": "cpp-skeleton",
+  "name": "bg_neuralnet",
   "version-string": "0.1.0",
   "dependencies": [
     "spdlog",
