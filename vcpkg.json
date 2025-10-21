@@ -1,5 +1,5 @@
 {
-  "name": "bg_neuralnet",
+  "name": "bg-neuralnet",
   "version-string": "0.1.0",
   "dependencies": [
     "spdlog",
