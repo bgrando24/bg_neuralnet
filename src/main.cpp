@@ -1,5 +1,6 @@
 #include <iostream>
 #include <spdlog/spdlog.h>
+#include <vector>
 // spdlog::info("Hello from spdlog!");
 
 /**
@@ -16,7 +17,7 @@
 */
 
 // Defines the structure of a given activation function, provides both the base function and its derivative
-struct Activation_Function
+struct ActivationFunction
 {
     // std::function is any callable object (function/method)
     // syntax is: <return-type(argument-type)>
@@ -29,13 +30,15 @@ class Perceptron
 {
 private:
     double bias;
-    int input_connections;
-    int output_connections;
 
 public:
-    Perceptron(double start_bias, int input_connections, int output_connections)
+    ActivationFunction activation;
+
+    Perceptron(double start_bias, ActivationFunction activation)
     {
-        }
+        this->bias = start_bias;
+        this->activation = activation;
+    }
 };
 
 int main()
